@@ -169,12 +169,6 @@ public interface BasicDataSourceMXBean {
     int getNumIdle();
 
     /**
-     * See {@link BasicDataSource#getPassword()}
-     * @return {@link BasicDataSource#getPassword()}
-     */
-    String getPassword();
-
-    /**
      * See {@link BasicDataSource#getUrl()}
      * @return {@link BasicDataSource#getUrl()}
      */

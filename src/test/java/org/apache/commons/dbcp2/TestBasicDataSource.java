@@ -17,8 +17,17 @@
 
 package org.apache.commons.dbcp2;
 
-import static org.junit.Assert.*;
+import org.apache.commons.logging.LogFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
+import javax.management.AttributeNotFoundException;
+import javax.management.MBeanAttributeInfo;
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.sql.Connection;
@@ -28,15 +37,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.management.MBeanServer;
-import javax.management.ObjectName;
-import javax.sql.DataSource;
-
-import org.apache.commons.logging.LogFactory;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * TestSuite for BasicDataSource
@@ -735,6 +736,38 @@ public class TestBasicDataSource extends TestConnectionPool {
         ds.getConnection();  // Trigger initialization
         // Nothing should be registered
         assertEquals(0, mbs.queryNames(commons, null).size());
+    }
+
+    /**
+     * JIRA: DBCP-562
+     * Make sure Password Attribute is not exported via JMXBean.
+     */
+    @Test
+    public void testJmxDoesNotExposePassword() throws Exception {
+        final MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+
+        // create ObjectName for this test
+        ObjectName dbcp562 = new ObjectName("org.apache.commons:name=DBCP-562,type=bug");
+        ds.setJmxName(dbcp562.toString());
+
+        mbs.registerMBean(ds, dbcp562);
+
+        MBeanAttributeInfo[] attributes = mbs.getMBeanInfo(dbcp562).getAttributes();
+
+        assertTrue(attributes != null && attributes.length > 0);
+
+        for (MBeanAttributeInfo attribute : attributes) {
+            assertFalse("password".equalsIgnoreCase(attribute.getName()));
+        }
+
+        try{
+            mbs.getAttribute(dbcp562, "Password");
+        }catch (AttributeNotFoundException e){
+            assertTrue(true);
+        }catch(Exception e2){
+            fail();
+        }
+
     }
 }
 
