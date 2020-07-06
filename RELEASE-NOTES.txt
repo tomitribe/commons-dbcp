@@ -11,7 +11,11 @@ This is minor release, including bug fixes and enhancements. Note that
  BasicDataSource, PoolingDataSource and the InstanceKeyDataSource
  implementations.
 
-Changes in this version include:
+Changes include:
+
+2.1-TT.1:
+o DBCP-562:  Avoids exposing password via JMX.
+
 
 New features:
 o DBCP-426:  Added invalidateConnection method to BasicDataSource. Thanks to Kasper Sørensen.
