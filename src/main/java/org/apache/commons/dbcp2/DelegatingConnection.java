@@ -114,8 +114,6 @@ public class DelegatingConnection<C extends Connection> extends AbandonedTrace
                     if (meta != null) {
                         sb.append(", URL=");
                         sb.append(meta.getURL());
-                        sb.append(", UserName=");
-                        sb.append(meta.getUserName());
                         sb.append(", ");
                         sb.append(meta.getDriverName());
                         s = sb.toString();

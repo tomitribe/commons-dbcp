@@ -38,6 +38,7 @@ import javax.sql.ConnectionPoolDataSource;
 import javax.sql.PooledConnection;
 
 import org.apache.commons.dbcp2.PoolablePreparedStatement;
+import org.apache.commons.dbcp2.Utils;
 import org.apache.commons.pool2.KeyedObjectPool;
 import org.apache.commons.pool2.impl.BaseObjectPoolConfig;
 import org.apache.commons.pool2.impl.GenericKeyedObjectPool;
@@ -702,5 +703,45 @@ public class DriverAdapterCPDS
     public void setMaxPreparedStatements(int maxPreparedStatements)
     {
         _maxPreparedStatements = maxPreparedStatements;
+    }
+
+    /**
+     * Does not print the userName and userPassword field nor the 'user' or 'password' in the connectionProperties.
+     *
+     * @since 2.6.0
+     */
+    @Override
+    public synchronized String toString() {
+        final StringBuilder builder = new StringBuilder(super.toString());
+        builder.append("[description=");
+        builder.append(description);
+        builder.append(", url=");
+        // TODO What if the connection string contains a 'user' or 'password' query parameter but that connection string
+        // is not in a legal URL format?
+        builder.append(url);
+        builder.append(", driver=");
+        builder.append(driver);
+        builder.append(", loginTimeout=");
+        builder.append(loginTimeout);
+        builder.append(", poolPreparedStatements=");
+        builder.append(poolPreparedStatements);
+        builder.append(", maxIdle=");
+        builder.append(maxIdle);
+        builder.append(", timeBetweenEvictionRunsMillis=");
+        builder.append(_timeBetweenEvictionRunsMillis);
+        builder.append(", numTestsPerEvictionRun=");
+        builder.append(_numTestsPerEvictionRun);
+        builder.append(", minEvictableIdleTimeMillis=");
+        builder.append(_minEvictableIdleTimeMillis);
+        builder.append(", maxPreparedStatements=");
+        builder.append(_maxPreparedStatements);
+        builder.append(", getConnectionCalled=");
+        builder.append(getConnectionCalled);
+        builder.append(", connectionProperties=");
+        builder.append(Utils.cloneWithoutCredentials(connectionProperties));
+        builder.append(", accessToUnderlyingConnectionAllowed=");
+        builder.append(accessToUnderlyingConnectionAllowed);
+        builder.append("]");
+        return builder.toString();
     }
 }

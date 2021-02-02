@@ -197,6 +197,18 @@ public class TestDriverAdapterCPDS {
         }
     }
 
+    @Test
+    public void testToStringWithoutCredentialsInProperties() throws Exception {
+        Properties properties = new Properties();
+        properties.put("user", "foo");
+        properties.put("password", "var");
+        pcds.setConnectionProperties(properties);
+
+        String[] obtainedProperties = pcds.toString().split(",");
+        assertTrue(obtainedProperties[11].contains("connectionProperties="));
+        assertTrue(!obtainedProperties[11].contains("user") && !obtainedProperties[11].contains("password"));
+    }
+
     private static class ThreadDbcp367 extends Thread {
 
         private final DataSource ds;

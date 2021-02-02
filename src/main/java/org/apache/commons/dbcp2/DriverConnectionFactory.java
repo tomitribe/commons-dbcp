@@ -45,7 +45,6 @@ public class DriverConnectionFactory implements ConnectionFactory {
 
     @Override
     public String toString() {
-        return this.getClass().getName() + " [" + String.valueOf(_driver) + ";" +
-                String.valueOf(_connectUri) + ";"  + String.valueOf(_props) + "]";
+        return this.getClass().getName() + " [" + _driver + ";" + _connectUri + ";" + Utils.cloneWithoutCredentials(_props) + "]";
     }
 }

@@ -60,7 +60,7 @@ class PoolKey implements Serializable {
     public String toString() {
         StringBuffer sb = new StringBuffer(50);
         sb.append("PoolKey(");
-        sb.append(username).append(", ").append(datasourceName);
+        sb.append("UserName").append(", ").append(datasourceName);
         sb.append(')');
         return sb.toString();
     }

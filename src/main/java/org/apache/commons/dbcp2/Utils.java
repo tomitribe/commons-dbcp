@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.MessageFormat;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -68,6 +69,25 @@ public final class Utils {
     private Utils() {
         // not instantiable
     }
+
+
+    /**
+     * Clones the given {@link Properties} without the standard "user" or "password" entries.
+     *
+     * @param properties may be null
+     * @return a clone of the input without the standard "user" or "password" entries.
+     * @since 2.8.0
+     */
+    public static Properties cloneWithoutCredentials(final Properties properties) {
+        if (properties != null) {
+            Properties temp = (Properties) properties.clone();
+            temp.remove("user");
+            temp.remove("password");
+            return temp;
+        }
+        return properties;
+    }
+
 
     /**
      * Closes the ResultSet (which may be null).
