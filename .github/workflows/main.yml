@@ -1,0 +1,34 @@
+name: CI commons-dbcp-2.1-TT.x-release
+
+on:
+  push:
+    branches:
+      - commons-dbcp-2.1-TT.x-release
+  pull_request:
+    branches:
+      - commons-dbcp-2.1-TT.x-release
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Compile with test
+        run: mvn help:system -U --show-version clean install
+        env:
+          MAVEN_OPTS: -Xmx2048m
+
