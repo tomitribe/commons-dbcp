@@ -60,6 +60,14 @@ public class TestDelegatingConnection {
     }
 
     @Test
+    public void testToStringWithoutUsername() throws Exception {
+        String s = conn.toString();
+        assertNotNull(s);
+        assertTrue(!s.contains("UserName="));
+        assertTrue(s.length() > 0);
+    }
+
+    @Test
     public void testCheckOpen() throws Exception {
         conn.checkOpen();
         conn.close();

@@ -60,7 +60,29 @@ The <action> type attribute can be add,update,fix,remove.
      -->
 
   <body>
-    <release version="2.1" date="TBD" description=
+      <release version="2.1-TT.1">
+          <action dev="ggregory" type="update" due-to="Gary Gregory">
+              Do not display credentials in DriverAdapterCPDS.toString().
+          </action>
+          <action dev="ggregory" type="update" due-to="Gary Gregory">
+              Do not display credentials in DelegatingConnection.toString().
+          </action>
+          <action dev="ggregory" type="update" due-to="Gary Gregory">
+              Do not display credentials in DriverConnectionFactory.toString().
+          </action>
+          <action dev="ggregory" type="update" due-to="Gary Gregory">
+              Do not display credentials in PoolKey.toString().
+          </action>
+          <action dev="ggregory" type="update" due-to="Gary Gregory">
+              Do not display credentials in UserPassKey.toString().
+          </action>
+      </release>
+      <release version="2.1-TT.0">
+          <action issue="DBCP-562">
+              Avoids exposing password via JMX in BasicDataSourceMXBean.java
+          </action>
+      </release>
+      <release version="2.1" date="TBD" description=
  "This is minor release, including bug fixes and enhancements. Note that
   one of the enhancements (DBCP-423) is to implement AutoCloseable in
   BasicDataSource, PoolingDataSource and the InstanceKeyDataSource

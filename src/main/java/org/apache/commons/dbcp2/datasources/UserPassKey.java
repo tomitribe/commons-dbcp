@@ -94,11 +94,5 @@ class UserPassKey implements Serializable {
                 this.username.hashCode() : 0;
     }
 
-    @Override
-    public String toString() {
-        StringBuffer sb = new StringBuffer(50);
-        sb.append("UserPassKey(");
-        sb.append(username).append(", ").append(password).append(')');
-        return sb.toString();
-    }
+
 }
